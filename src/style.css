@@ -1,0 +1,171 @@
+:root {
+    font-size: 10px;
+    font-family: 'Rubik', sans-serif;
+}
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.finder {
+    padding: 2rem 1.5rem 17.5rem;
+    text-align: center;
+    position: relative;
+    background: transparent;
+    isolation: isolate;
+    z-index: 1;
+}
+
+.finder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+            linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3)),
+            url(../images/pattern-bg.png);
+    background-size: cover;
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}
+
+@media (min-width: 1024px) {
+    .finder {
+        padding: 2rem 1.5rem;
+    }
+}
+
+.title {
+    color: black;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.search-bar__input {
+    width: 100%;
+    max-width: 500px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: hsl(0, 0%, 17%);
+    border: 3px solid black;
+    outline: none;
+    padding: 1.5rem 2rem;
+    border-radius: 10px 0 0 10px;
+    cursor: pointer;
+}
+.search-bar__btn {
+    background-color: black;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 0 1.5rem;
+    border-radius: 0 10px 10px 0;
+    position: relative;
+    cursor: pointer;
+}
+.search-bar__btn:hover {
+    background-color: rgb(77, 77, 77);
+}
+.search-bar__btn::after {
+    display: block;
+
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: transparent;
+    border: 2px solid;
+    border-color: white white transparent transparent;
+    transform: rotate(45deg);
+}
+
+.info {
+    width: calc(100% - 3rem);
+    background-color: white;
+    padding: 2rem;
+    border: 3px solid black;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 1.5rem;
+    z-index: 10000;
+}
+
+@media (min-width: 1024px) {
+    .finder {
+        padding: 2rem 1.5rem 9rem; /* дай низу хедера высоту, чтобы карточке было где висеть */
+    }
+    .info {
+        width: 100%;
+        max-width: 1000px;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%); /* центр по X + сдвиг вниз на половину высоты */
+
+        /* margin-left/right больше не нужны */
+    }
+}
+
+.info__block {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 25%;
+    padding: 0 1rem;
+    position: relative;
+}
+.info__block:not(:last-child) {
+    margin-bottom: 2.5rem;
+}
+
+.info__block-subtitle {
+    color: hsl(0, 0%, 59%);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.3rem;
+}
+.info__block-title {
+    color: hsl(0, 0%, 17%);
+    font-weight: 700;
+    font-size: 2rem;
+}
+.map {
+    min-height: calc(100vh - 150px);
+    position: relative;
+    margin-top: -8rem;                /* поднимаем карту под низ хедера */
+    z-index: 0;
+}
+
+@media (min-width: 1024px) {
+    .info {
+        flex-direction: row;
+    }
+    .info__block {
+        margin-bottom: 0;
+    }
+    .info__block::after {
+        content: '';
+        width: 1px;
+        height: 90%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: hsla(0, 0%, 59%, 0.3);
+    }
+    .info__block:last-child::after {
+        display: none;
+    }
+    .info__block-title {
+        font-size: 2.4rem;
+    }
+}
+
