@@ -6,7 +6,7 @@
 
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
 
-    <title>Frontend Mentor | IP Address Tracker</title>
+    <title>IP Address Tracker</title>
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,7 +40,12 @@
 			</div>
 		</div>
 	</header>
-	<div class="map" id="map"></div>
+	<div class="map" id="map">
+		<div class="preloader" id="preloader" role="status" aria-live="polite" aria-label="Loading map">
+			<div class="preloader__spinner"></div>
+			<div class="preloader__text">Loading…</div>
+		</div>
+	</div>
 <script type="module" src="./src/index.js"></script>
 </body>
 </html>
