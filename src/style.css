@@ -145,6 +145,53 @@
     z-index: 0;
 }
 
+.preloader {
+    position: absolute;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.preloader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.preloader__spinner {
+    width: 6rem;
+    height: 6rem;
+    border: 6px solid hsla(0, 0%, 17%, 0.15);
+    border-top-color: hsl(0, 0%, 17%);
+    border-radius: 50%;
+    animation: preloader-spin 0.9s linear infinite;
+}
+
+.preloader__text {
+    color: hsl(0, 0%, 17%);
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 0.1rem;
+}
+
+@keyframes preloader-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .preloader__spinner {
+        animation-duration: 2s;
+    }
+}
+
 @media (min-width: 1024px) {
     .info {
         flex-direction: row;
