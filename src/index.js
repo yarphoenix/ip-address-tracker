@@ -3,16 +3,17 @@ import L from 'leaflet';
 import {
     validateIp,
     AddTileLayer,
+    buildTileUrl,
     getAddress,
     addOffset,
+    initTheme,
+    getTheme,
+    subscribeTheme,
+    initThemeToggle,
+    getMarkerIcon,
 } from './helpers'
-import icon from '../images/icon-location.svg';
 
-const myIcon = L.icon({
-    iconUrl: icon,
-    iconSize: [50, 60],
-    iconAnchor: [25, 60],
-});
+let marker = null;
 
 const ipInput = document.querySelector('.search-bar__input');
 const btn = document.querySelector('.search-bar__btn');
@@ -23,6 +24,10 @@ const timezoneInfo = document.querySelector('#timezone');
 const ispInfo = document.querySelector('#isp');
 
 const preloader = document.querySelector('#preloader');
+const themeBtn = document.querySelector('#theme-toggle');
+
+const initialTheme = initTheme();
+initThemeToggle(themeBtn);
 
 const mapArea = document.querySelector('#map');
 const map = L.map(mapArea, {
@@ -31,7 +36,12 @@ const map = L.map(mapArea, {
     zoomControl: false,
 })
 
-const tileLayer = AddTileLayer(map);
+const tileLayer = AddTileLayer(map, initialTheme);
+
+subscribeTheme((theme) => {
+    tileLayer.setUrl(buildTileUrl(theme));
+    marker?.setIcon(getMarkerIcon(theme));
+});
 
 showPreloader();
 waitForTiles().then(hidePreloader);
@@ -90,8 +100,6 @@ function handleEnter(e) {
     }
 }
 
-let currentMarker = null;
-
 function setMapView(mapData) {
     const { country, region, city, timezone } = mapData.location;
     const { lat, lng } = mapData.location;
@@ -100,8 +108,12 @@ function setMapView(mapData) {
 
     map.setView([lat, lng], 13);
 
-    if (currentMarker) currentMarker.remove();
-    currentMarker = L.marker([lat, lng], { icon: myIcon }).addTo(map);
+    if (marker) {
+        marker.setLatLng([lat, lng]);
+        marker.setIcon(getMarkerIcon(getTheme()));
+    } else {
+        marker = L.marker([lat, lng], { icon: getMarkerIcon(getTheme()) }).addTo(map);
+    }
 
     ipInfo.textContent = mapData.ip;
     locationInfo.textContent = `${country}, ${region}, ${city}`;
