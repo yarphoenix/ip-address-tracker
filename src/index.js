@@ -104,8 +104,6 @@ function setMapView(mapData) {
     const { country, region, city, timezone } = mapData.location;
     const { lat, lng } = mapData.location;
 
-    console.log(mapData);
-
     map.setView([lat, lng], 13);
 
     if (marker) {
